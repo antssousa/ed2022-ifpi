@@ -91,6 +91,7 @@ function Stack() {
   }
 }
 
+// [1, 2, 3, 4, 5][(5, 4, 3, 2, 1)]
 function reverse(queue) {
   const stack = new Stack()
   while (!queue.isEmpty()) {
@@ -103,7 +104,7 @@ function reverse(queue) {
 
 const queue = new Queue()
 for (let i = 0; i < 10; i++) {
-  let n = Math.floor(Math.random() * 100)
+  let n = Math.floor(Math.random() * 100) // 0 - 99
   queue.enqueue(n)
 }
 queue.print()

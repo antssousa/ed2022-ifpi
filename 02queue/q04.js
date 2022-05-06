@@ -1,22 +1,9 @@
-function Queue(maxLength = 0) {
+function Queue() {
   let itens = []
-  let max = maxLength
-
-  this.setSizeMax = function (tamanho) {
-    max = tamanho
-  }
-
-  this.isFull = function () {
-    return this.size() == max
-  }
 
   // Enfileirar
   this.enqueue = function (elemento) {
-    if (this.isFull()) {
-      console.log('A fila está cheia!')
-    } else {
-      itens.push(elemento)
-    }
+    itens.push(elemento)
   }
 
   // Desenfileirar
@@ -53,20 +40,13 @@ function Queue(maxLength = 0) {
   this.isEmpty = function () {
     return itens.length == 0
   }
-}
 
+  this.queueJump = function (pos, elemento) {
+    if (pos < 0 || pos > this.size()) {
+      console.log('Valores inválidos')
+    } else {
+    }
+  }
+}
+const read = require('readline-sync')
 const queue = new Queue()
-queue.setSizeMax(5)
-queue.enqueue(1)
-queue.print()
-queue.enqueue(2)
-queue.print()
-queue.enqueue(3)
-queue.print()
-queue.enqueue(4)
-queue.print()
-queue.enqueue(5)
-queue.print()
-queue.enqueue(6)
-queue.print()
-const queue2 = new Queue(100)
