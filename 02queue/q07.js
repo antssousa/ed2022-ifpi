@@ -40,30 +40,33 @@ function Queue() {
   this.isEmpty = function () {
     return itens.length == 0
   }
-
-  this.queueJump = function (pos, elemento) {
-    if (pos < 0 || pos > this.size()) {
-      console.log('Valores inválidos')
-    } else {
-      itens.splice(pos, 0, elemento)
-    }
-  }
 }
 const read = require('readline-sync')
-const queue = new Queue()
-queue.enqueue(1)
-queue.print()
-queue.enqueue(2)
-queue.print()
-queue.enqueue(3)
-queue.print()
-queue.enqueue(4)
-queue.print()
-queue.enqueue(5)
-queue.print()
-queue.enqueue(6)
-queue.print()
-queue.enqueue(7)
-queue.print()
-queue.queueJump(4, 1000)
-queue.print()
+const filas = []
+for (let i = 0; i < 7; i++) {
+  filas[i] = new Queue()
+}
+
+let d = 0
+let pessoa = 0
+for (;;) {
+  console.log('0 - Sair')
+  if (d > 6) {
+    d = 0
+  } else {
+    d = d + 1
+  }
+  let op = read.questionInt(
+    'Digite qual dia da semana deseja reservar o filme: '
+  )
+  if (op == 0) {
+    break
+  }
+  let nome = read.question('Digite seu nome: ')
+  filas[op - 1].enqueue(nome)
+  do {
+    let alugar = read.question(
+      `${filas[d].dequeue()} vai alugar? 1 - sim, 0 - não: `
+    )
+  } while (!filas[d].isEmpty() && alugar != 0)
+}

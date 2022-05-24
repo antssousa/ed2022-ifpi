@@ -55,10 +55,23 @@ function Stack() {
     }
     return -1
   }
+
+  this.indexLastOf = function (elemento) {
+    let index = 0
+    let tam = this.size() - 1
+    let pos = -1
+    while (!this.isEmpty()) {
+      if (elemento == this.pop()) {
+        pos = tam - index
+      }
+      index++
+    }
+    return pos
+  }
 }
 
 const pilha = new Stack()
-pilha.push(12)
+pilha.push(10)
 for (let i = 0; i < 10; i++) {
   pilha.push(Math.floor(Math.random() * 100))
 }
@@ -80,5 +93,6 @@ pilha.print()
 //   console.log('10 não está na pilha')
 // }
 
+// console.log(pilha.indexLastOf(10))
 console.log(pilha.indexOf(10))
-console.log(pilha.indexOf(12))
+// console.log(pilha.indexLastOf(10))
