@@ -189,28 +189,69 @@ function LinkedList() {
     }
 }
 
-const ll = new LinkedList()
-ll.print()
-ll.append('b')
-ll.append('x')
-ll.append('d')
-ll.append('e')
-ll.append('z')
-// ld.append('x')
-ll.print()
-console.log(ll.size())
-// console.log(ld.indexOf('x'))
-// console.log(ld.lastIndexOf('x'))
-console.log(ll.insert('a', 10))
-ll.print()
-console.log(ll.insert('a', 0))
-ll.print()
-console.log(ll.insert('w', 2))
-ll.print()
-console.log(ll.removeAt(0))
-ll.print()
-console.log(ll.removeAt(3))
-ll.print()
-console.log(ll.removeAt(ll.size() - 1))
-ll.print()
-console.log(ll.get(0))
+function Queue() {
+    const ll = new LinkedList()
+    // Enfileirar
+    this.enqueue = function (element) {
+        ll.append(element)
+    }
+
+    // Desenfileirar
+    this.dequeue = function () {
+        return ll.removeAt(0)
+    }
+
+    // Limpar a fila (remover todos os elementos)
+    this.clear = function () {
+        ll.clear()
+    }
+
+    // Tamanho da fila
+    this.size = function () {
+        return ll.size()
+    }
+
+    // Mostrar o primeiro elemento da fila
+    this.front = function () {
+        return ll.get(0)
+    }
+
+    // Mostrar o último elemento da fila
+    this.back = function () {
+        return ll.get(ll.size() - 1)
+    }
+
+    // Imprimir os elementos da fila
+    this.print = function () {
+        ll.print()
+    }
+
+    // Verificar se a fila está vazia
+    this.isEmpty = function () {
+        return ll.isEmpty()
+    }
+}
+
+const q = new Queue()
+q.enqueue(1)
+q.print()
+q.enqueue(2)
+q.print()
+q.enqueue(3)
+q.print()
+q.enqueue(4)
+q.print()
+q.enqueue(5)
+q.print()
+q.enqueue(6)
+q.print()
+q.dequeue()
+q.print()
+q.dequeue()
+q.print()
+q.dequeue()
+q.print()
+q.dequeue()
+q.print()
+q.dequeue()
+q.print()

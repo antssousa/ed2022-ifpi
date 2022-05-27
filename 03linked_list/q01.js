@@ -175,7 +175,6 @@ function LinkedList() {
         return ll
     }
 
-    // Gera um array a partir da linked list
     this.toArray = function () {
         let array = []
         let current = head
@@ -189,28 +188,71 @@ function LinkedList() {
     }
 }
 
-const ll = new LinkedList()
-ll.print()
-ll.append('b')
-ll.append('x')
-ll.append('d')
-ll.append('e')
-ll.append('z')
-// ld.append('x')
-ll.print()
-console.log(ll.size())
-// console.log(ld.indexOf('x'))
-// console.log(ld.lastIndexOf('x'))
-console.log(ll.insert('a', 10))
-ll.print()
-console.log(ll.insert('a', 0))
-ll.print()
-console.log(ll.insert('w', 2))
-ll.print()
-console.log(ll.removeAt(0))
-ll.print()
-console.log(ll.removeAt(3))
-ll.print()
-console.log(ll.removeAt(ll.size() - 1))
-ll.print()
-console.log(ll.get(0))
+// Criar uma pilha a partir de uma lista ligada
+function Stack() {
+    const ll = new LinkedList()
+
+    // Inserir no topo
+    this.push = function (element) {
+        ll.append(element)
+    }
+
+    // Remover do topo
+    this.pop = function () {
+        return ll.removeAt(ll.size() - 1)
+    }
+
+    // Exibir o topo
+    this.peek = function () {
+        return ll.get(ll.size() - 1)
+    }
+
+    // Verificar se está vazia
+    this.isEmpty = function () {
+        return ll.isEmpty()
+    }
+
+    // Imprimir a pilha toda
+    this.print = function () {
+        // ll.print()
+        // console.log(ll.toString())
+        // Imprimir a pilha com os elementos um embaixo do outro
+        const array = ll.toArray()
+        let str = ''
+        for (let i = array.length - 1; i >= 0; i--) {
+            str += array[i] + '\n'
+        }
+        console.log(str)
+    }
+
+    // Limpar a pilha
+    this.clear = function () {
+        ll.clear()
+    }
+
+    // Retornar o tamanho da pilha
+    this.size = function () {
+        return ll.size()
+    }
+}
+
+const stack = new Stack()
+stack.push(1)
+stack.print()
+stack.push(2)
+stack.print()
+stack.push(3)
+stack.print()
+console.log(stack.peek())
+stack.push(4)
+stack.print()
+stack.push(5)
+stack.print()
+stack.pop()
+stack.print()
+stack.pop()
+stack.print()
+stack.pop()
+stack.print()
+console.log(stack.peek())
+stack.print()
