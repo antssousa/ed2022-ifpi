@@ -1,29 +1,24 @@
 const link = require('../modulos/LinkedList')
 
 function isSorted(ll) {
-    // // Primeiro
-    // let current = ll.getHead()
-    // // Segundo
-    // let next = current.next
-    // while (next) {
-    //     if (current.element > next.element) {
-    //         return false
-    //     }
-    //     current = next
-    //     next = current.next
-    // }
-    // return true
-    ll.print()
-    let current = ll.get(0) // [1]
-    let next = ll.get(1) // undefined
-    for (let i = 1; i < ll.size(); i++) {
-        if (current > next) {
+    // Primeiro
+    let current = ll.getHead()
+    // Segundo
+    let next = current.next
+    while (next) {
+        if (current.element > next.element) {
             return false
         }
-        current = ll.get(i)
-        next = ll.get(i + 1)
+        current = next
+        next = current.next
     }
     return true
+    // for (let i = 0; i < ll.size() - 1; i++) {
+    //     if (ll.get(i) > ll.get(i + 1)) {
+    //         return false
+    //     }
+    // }
+    // return true
 }
 
 const lla = new link.LinkedList()
