@@ -1,5 +1,2 @@
-let index = ll.indexOf(element)
-    if (index != -1) {
-        return ll.size() - 1 - index
-    }
-    return -1
+} else if (this.size() == 1) {
+            return `[${head.element}]`

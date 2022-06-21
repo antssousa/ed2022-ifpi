@@ -1,12 +1,15 @@
-function LinkedList() {
+function DoublyLinkedList() {
     // Nó da lista (Armazena o elemento e aponta para o próximo elemento)
     let Node = function (element) {
         this.element = element
-        this.next = null
+        this.next = null // Próximo elemento
+        this.prev = null // Elemento anterior
     }
 
     // Aponta para o primeiro nó da lista
     let head = null
+    // Aponta para o último nó da lista
+    let tail = null
     // Quantidade de nós na lista
     let length = 0
 
@@ -17,19 +20,25 @@ function LinkedList() {
     this.setHead = function (node) {
         head = node
     }
+
+    this.getTail = function () {
+        return tail
+    }
+
+    this.setTail = function (node) {
+        tail = node
+    }
+
     // Inserir um nó no final da lista
     this.append = function (element) {
         let node = new Node(element)
-
         if (this.isEmpty()) {
             head = node
+            tail = node
         } else {
-            let current = head
-            while (current.next) {
-                // while (current.next != null)
-                current = current.next
-            }
-            current.next = node
+            node.prev = tail
+            tail.next = node
+            tail = node
         }
         length++
     }
@@ -37,21 +46,26 @@ function LinkedList() {
     // Inserir um nó numa posição específica
     this.insert = function (element, position) {
         if (position >= 0 && position <= length) {
-            let newNode = new Node(element)
+            let node = new Node(element)
             if (position == 0) {
-                newNode.next = head
-                head = newNode
+                node.next = head
+                head.prev = node
+                head = node
+            } else if (position == length) {
+                this.append(element)
             } else {
-                let previous = null
                 let current = head
+                let previous = null
                 let i = 0
                 while (i < position) {
                     previous = current
                     current = current.next
                     i++
                 }
-                previous.next = newNode
-                newNode.next = current
+                node.next = current
+                node.prev = previous
+                previous.next = node
+                current.prev = node
             }
             length++
             return true
@@ -64,18 +78,25 @@ function LinkedList() {
         if (position >= 0 && position < length) {
             let current = head
             if (position == 0) {
-                head = head.next
+                current.next.prev = null
+                head = current.next
+            } else if (position == length - 1) {
+                current = tail
+                tail = tail.prev
+                tail.next = null
             } else {
                 let previous = null
-                let i = 0
-                while (i < position) {
+                let index = 0
+                while (index < position) {
                     previous = current
                     current = current.next
-                    i++
+                    index++
                 }
+                // previous.next --> current
+                // current.prev --> previous
                 previous.next = current.next
+                current.next.prev = previous
             }
-            length--
             return current.element
         }
         return undefined
@@ -90,14 +111,14 @@ function LinkedList() {
     // Retornar o índice do primeiro nó com aquele elemento
     this.indexOf = function (element) {
         let current = head
-        let index = -1
+        let index = 0
         while (current) {
             //current != null
             // null é equivalente a falso
-            index++
             if (element == current.element) {
                 return index
             }
+            index++
             current = current.next
         }
         return -1
@@ -105,17 +126,16 @@ function LinkedList() {
 
     // Retornar o índice do último nó com aquele elemento
     this.lastIndexOf = function (element) {
-        let current = head
-        let index = -1
-        let i = 0
+        let current = tail
+        let index = length - 1
         while (current) {
             if (element == current.element) {
-                index = i
+                return index
             }
-            current = current.next
-            i++
+            current = current.prev
+            index--
         }
-        return index
+        return -1
     }
 
     // Verificar se a lista está vazia
@@ -131,11 +151,22 @@ function LinkedList() {
     // Retorna o elemento do nó da posição recebida
     this.get = function (position) {
         if (position >= 0 && position < length) {
-            let current = head
-            let i = 0
-            while (i < position) {
-                current = current.next
-                i++
+            // Se estiver entre o começo e a metade é melhor começar pela cabeça
+            let current = null
+            if (position < Math.ceil(length / 2)) {
+                current = head
+                let i = 0
+                while (i < position) {
+                    current = current.next
+                    i++
+                }
+            } else {
+                current = tail
+                let i = length - 1
+                while (i > position) {
+                    current = current.prev
+                    i--
+                }
             }
             return current.element
         }
@@ -165,22 +196,11 @@ function LinkedList() {
     // Limpar a lista
     this.clear = function () {
         head = null
+        tail = null
     }
 
     // Copiar uma lista
-    this.clone = function () {
-        const ll = new LinkedList()
-        // for (let i = 0; i < length; i++) {
-        //     ll.append(this.get(i)) 1 + 2 + 3 + 4 + 5
-        // }
-        current = head
-        while (current) {
-            ll.append(current.element) // 5
-            current = current.next
-        }
-
-        return ll
-    }
+    this.clone = function () {}
 
     // Gera um array a partir da linked list
     this.toArray = function () {
@@ -194,6 +214,45 @@ function LinkedList() {
         }
         return array
     }
+
+    this.toArrayReverse = function () {
+        let array = []
+        let current = tail
+        let i = 0
+        // current != null
+        while (current) {
+            array[i] = current.element
+            current = current.prev
+            i++
+        }
+        return array
+    }
 }
 
-exports.LinkedList = LinkedList
+// exports.DoublyLinkedList = DoublyLinkedList
+const dll = new DoublyLinkedList()
+dll.append('a')
+dll.append('b')
+dll.append('c')
+dll.append('e')
+dll.append('d')
+dll.append('d')
+dll.append('d')
+dll.append('e')
+
+dll.print()
+console.log(`e se encontra na posição ${dll.indexOf('e')}`)
+console.log(`e se encontra na posição ${dll.lastIndexOf('e')}`)
+console.log(dll.get(0))
+console.log(dll.get(dll.size() - 1))
+
+dll.insert('z', 0)
+dll.print()
+dll.insert('z', dll.size())
+dll.print()
+dll.insert('X', 3)
+dll.insert('X', 2)
+dll.print()
+console.log('______________')
+console.log(dll.removeAt(2))
+dll.print()
